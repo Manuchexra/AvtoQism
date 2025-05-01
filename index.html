@@ -14,7 +14,7 @@
 		<link href="https://fonts.googleapis.com/css?family=Rufina:400,700" rel="stylesheet">
         
         <!-- title of site -->
-        <title>CarVilla</title>
+        <title>G'ildirak</title>
 
         <!-- For favicon png -->
 		<link rel="shortcut icon" type="image/icon" href="assets/logo/favicon.png"/>
@@ -78,7 +78,7 @@
 				                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-menu">
 				                    <i class="fa fa-bars"></i>
 				                </button>
-				                <a class="navbar-brand" href="index.html">carvilla<span></span></a>
+				                <a class="navbar-brand" href="index.html">G'ildirak<span></span></a>
 
 				            </div><!--/.navbar-header-->
 				            <!-- End Header Navigation -->
@@ -89,7 +89,7 @@
 				                    <li class=" scroll active"><a href="#home">home</a></li>
 				                    <li class="scroll"><a href="#service">service</a></li>
 				                    <li class="scroll"><a href="#featured-cars">featured cars</a></li>
-				                    <li class="scroll"><a href="#new-cars">new cars</a></li>
+				                    <li class="file"><a href="shops.html">shops</a></li>
 				                    <li class="scroll"><a href="#brand">brands</a></li>
 				                    <li class="scroll"><a href="#contact">contact</a></li>
 				                </ul><!--/.nav -->
@@ -103,13 +103,25 @@
 			</div><!-- /.top-area-->
 			<!-- top-area End -->
 
-			<div class="container">
-				<div class="welcome-hero-txt">
-					<h2>get your desired car in resonable price</h2>
-					<p>
-						Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore   magna aliqua. 
-					</p>
-					<button class="welcome-btn" onclick="window.location.href='#'">contact us</button>
+			<div class="welcome-hero">
+				<!-- Video background element -->
+				<div class="video-background">
+					<video autoplay muted loop id="welcomeVideo">
+						<source src="assets/images/welcome-hero/welcome.mp4" type="video/mp4">
+						<!-- Fallback image if video doesn't load -->
+						<img src="../images/welcome-hero/welcome-banner.jpg" alt="Welcome banner">
+					</video>
+				</div>
+				
+				<!-- Existing content container -->
+				<div class="container">
+					<div class="welcome-hero-txt">
+						<h2>get your desired car in resonable price</h2>
+						<p>
+							Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+						</p>
+						<button class="welcome-btn" onclick="window.location.href='#'">contact us</button>
+					</div>
 				</div>
 			</div>
 
