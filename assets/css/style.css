@@ -206,45 +206,9 @@ nav.navbar.bootsnav .navbar-toggle i{color: #4e4ffa;}
 --------------------------------------*/
 .welcome-hero {
     position: relative;
-    /* background:url(../images/welcome-hero/welcome-banner.jpg)no-repeat; */
     background-position: center;
     background-size: cover;
     z-index: 1;
-}
-.welcome-hero {
-    position: relative;
-    overflow: hidden;
-    height: 100vh; /* Or your desired height */
-    z-index: 1;
-}
-
-.video-background {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    z-index: -1; /* Ensures video stays behind content */
-}
-
-.video-background video {
-    min-width: 100%;
-    min-height: 100%;
-    width: auto;
-    height: auto;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    object-fit: cover;
-}
-
-/* Ensure your content stays visible */
-.welcome-hero-txt {
-    position: relative;
-    z-index: 2;
-    color: white; /* Or appropriate color for video background */
 }
 .welcome-hero:before {
     position: absolute;
@@ -258,22 +222,84 @@ nav.navbar.bootsnav .navbar-toggle i{color: #4e4ffa;}
 .header-area{position: absolute;top:0;left:0;width: 100%;z-index: 99;}
 
 /*.welcome-hero-txt*/
-.welcome-hero-txt{text-align: center;padding:290px 0 372px;}
+.welcome-hero {
+    position: relative;
+    width: 100%;
+    height: 100vh; /* Full viewport height */
+    overflow: hidden;
+    z-index: 1;
+}
+
+/* Video background container */
+.video-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+/* Video element styling */
+.video-background video {
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    object-fit: cover;
+}
+
+/* Overlay */
+.welcome-hero:before {
+    position: absolute;
+    content: "";
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(42,45,84,.60);
+    z-index: 0;
+}
+
+.header-area {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 99;
+}
+
+/* Content container */
+.welcome-hero-txt {
+    position: relative;
+    text-align: center;
+    padding: 290px 0 372px;
+    z-index: 1;
+}
+
 .welcome-hero-txt h2 {
     font-size: 42px;
     color: #fff;
     font-weight: 700;
     text-transform: uppercase;
     margin-bottom: 45px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
 }
+
 .welcome-hero-txt p {
     font-size: 18px;
     text-transform: initial;
     color: #fff;
     font-weight: 500;
     max-width: 735px;
-    margin: 0 auto;
+    margin: 0 auto 30px;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.2);
 }
+
 .welcome-btn {
     display: inline-block;
     width: 230px;
@@ -282,14 +308,18 @@ nav.navbar.bootsnav .navbar-toggle i{color: #4e4ffa;}
     color: #fff;
     border-radius: 3px;
     margin-top: 55px;
-    -webkit-transition: .3s linear; 
-    -moz-transition:.3s linear; 
-    -ms-transition:.3s linear; 
-    -o-transition:.3s linear;
-    transition: .3s linear;
+    font-size: 16px;
+    font-weight: 600;
+    text-transform: uppercase;
+    border: none;
+    cursor: pointer;
+    transition: all .3s ease;
 }
-.welcome-btn:hover{
+
+.welcome-btn:hover {
     background: #0102fa;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
 }
 /*.welcome-hero-txt*/
 
