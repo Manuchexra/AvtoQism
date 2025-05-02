@@ -1,11 +1,52 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="uz">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>AutoQism - Hamkor Do'konlar</title>
+    <link rel="stylesheet" href="assets/css/shops.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    Hello, this is the shops page.
+    <header class="header">
+        <div class="container">
+            <h1>AutoQism</h1>
+            <nav>
+                <a href="index.html">Bosh Sahifa</a>
+                <a href="shops.html" class="active">Do'konlar</a>
+                <a href="parts.html">Zapchastlar</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="shops-main">
+        <div class="container">
+            <h2>Hamkor Do'konlarimiz</h2>
+            
+            <div class="shop-filters">
+                <div class="search-box">
+                    <input type="text" id="shop-search" placeholder="Do'kon nomi yoki manzili...">
+                    <button id="search-btn"><i class="fas fa-search"></i></button>
+                </div>
+                <select id="category-filter">
+                    <option value="all">Barcha kategoriyalar</option>
+                    <option value="Tyres & Wheels">Shinalar va G'ildiraklar</option>
+                    <option value="Engine">Dvigatel qismlari</option>
+                </select>
+            </div>
+            
+            <div class="shops-container" id="shops-container">
+                <!-- Shops will be loaded here from JSON -->
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2023 AutoQism. Barcha huquqlar himoyalangan.</p>
+        </div>
+    </footer>
+
+    <script src="assets/js/shops.js"></script>
 </body>
 </html>

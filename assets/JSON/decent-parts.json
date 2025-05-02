@@ -1,0 +1,52 @@
+[
+  {
+      "autoPart": "Tyres & Wheels",
+      "description": "Turli xil shinalar va g'ildirak aksessuarlari",
+      "image_url": "assets/images/shops/tyres-shop.jpg",
+      "id": 1,
+      "autoSubPart": [
+          {
+              "c_id": 1,
+              "name": "G'ildirak aksessuarlari",
+              "description": "Turli xil g'ildirak aksessuarlari",
+              "url": "assets/images/json-url/1/Wheel-Cover-1.jpg",
+              "category": "parts",
+              "products": [
+                  {
+                      "p_id": 70,
+                      "name": "G'ildirak qopqog'i ABS 15 dyuym WK1-1SL-15",
+                      "description": "Mashinangiz uchun ajoyib dizayndagi g'ildirak qopqog'i",
+                      "price": 400000,
+                      "stock_amount": 20,
+                      "url": "assets/images/json-url/1/Wheel-Cover-1.jpg"
+                  }
+              ]
+          }
+      ]
+  },
+  {
+      "autoPart": "Engine Parts",
+      "description": "Barcha turdagi dvigatel qismlari va komponentlari",
+      "image_url": "assets/images/shops/engine-shop.jpg",
+      "id": 2,
+      "autoSubPart": [
+          {
+              "c_id": 2,
+              "name": "Dvigatel filterlari",
+              "description": "Barcha avtomobillar uchun dvigatel filterlari",
+              "url": "assets/images/json-url/2/Engine-Filter.jpg",
+              "category": "parts",
+              "products": [
+                  {
+                      "p_id": 45,
+                      "name": "Havo filteri Toyota Corolla",
+                      "description": "Original havo filteri",
+                      "price": 150000,
+                      "stock_amount": 15,
+                      "url": "assets/images/json-url/2/Engine-Filter.jpg"
+                  }
+              ]
+          }
+      ]
+  }
+]

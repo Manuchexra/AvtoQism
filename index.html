@@ -121,6 +121,324 @@
 					</div>
 				</div>
 			</div>
+			<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>G'ILDIRAK - Avto Zapchastlar</title>
+    <style>
+        /* Chat bot uchun asosiy stillar */
+        .chatbot-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 350px;
+            z-index: 1000;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .chatbot-header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 10px 10px 0 0;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+        
+        .chatbot-body {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-top: none;
+            height: 300px;
+            overflow-y: auto;
+            padding: 10px;
+            display: none;
+        }
+        
+        .chatbot-message {
+            margin-bottom: 10px;
+            padding: 8px 12px;
+            border-radius: 5px;
+            max-width: 80%;
+            word-wrap: break-word;
+        }
+        
+        .bot-message {
+            background-color: #f1f1f1;
+            align-self: flex-start;
+        }
+        
+        .user-message {
+            background-color: #3498db;
+            color: white;
+            align-self: flex-end;
+            margin-left: auto;
+        }
+        
+        .chatbot-input {
+            display: flex;
+            padding: 10px;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-top: none;
+            display: none;
+        }
+        
+        .chatbot-input input {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        .chatbot-input button {
+            margin-left: 5px;
+            padding: 8px 15px;
+            background-color: #2c3e50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        /* Signal icon uchun stillar */
+        .chatbot-notification {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: #e74c3c;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 12px;
+            font-weight: bold;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        /* Minimized chat icon */
+        .chatbot-minimized {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background-color: #2c3e50;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            z-index: 999;
+        }
+        
+        .chatbot-minimized i {
+            color: white;
+            font-size: 24px;
+        }
+        
+        .chatbot-minimized .chatbot-notification {
+            top: 0;
+            right: 0;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Sizning asosiy kontentingiz -->
+
+    <!-- Minimized chat icon (dastlab ko'rinadi) -->
+    <div class="chatbot-minimized" id="chatbotMinimized">
+        <i class="fas fa-comment-dots"></i>
+        <div class="chatbot-notification" id="chatNotification">3</div>
+    </div>
+
+    <!-- To'liq chat bot (dastlab yashirin) -->
+    <div class="chatbot-container" id="chatbotContainer" style="display:none;">
+        <div class="chatbot-header" id="chatbotToggle">
+            <span>G'ILDIRAK Yordamchi</span>
+            <div style="display:flex; align-items:center;">
+                <div class="chatbot-notification" id="chatNotificationFull">3</div>
+                <span id="chatbotIcon" style="margin-left:10px;">−</span>
+            </div>
+        </div>
+        <div class="chatbot-body" id="chatbotBody">
+            <div class="chatbot-message bot-message">
+                Salom! Men G'ILDIRAK avto zapchastlar do'koni yordamchiman. Sizga qanday yordam bera olaman?
+            </div>
+            <div class="chatbot-message bot-message">
+                Hozirda bizda yangi kelgan mahsulotlar bor:
+                <br>- Brembo tormoz tagliklari
+                <br>- Bosch moy filtri
+                <br>- Bridgestone shinalar
+            </div>
+        </div>
+        <div class="chatbot-input" id="chatbotInput">
+            <input type="text" id="userMessage" placeholder="Xabaringizni yozing..." autocomplete="off">
+            <button id="sendMessage"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
+
+    <script>
+        // DOM elementlari
+        const chatbotMinimized = document.getElementById('chatbotMinimized');
+        const chatbotContainer = document.getElementById('chatbotContainer');
+        const chatbotToggle = document.getElementById('chatbotToggle');
+        const chatbotBody = document.getElementById('chatbotBody');
+        const chatbotInput = document.getElementById('chatbotInput');
+        const chatbotIcon = document.getElementById('chatbotIcon');
+        const userMessage = document.getElementById('userMessage');
+        const sendMessage = document.getElementById('sendMessage');
+        const chatNotification = document.getElementById('chatNotification');
+        const chatNotificationFull = document.getElementById('chatNotificationFull');
+        
+        let isChatOpen = false;
+        let unreadMessages = 3; // Dastlabki bildirishnomalar soni
+        
+        // Minimized chatni bosganda
+        chatbotMinimized.addEventListener('click', () => {
+            chatbotMinimized.style.display = 'none';
+            chatbotContainer.style.display = 'block';
+            isChatOpen = true;
+            
+            // Bildirishnomalarni tozalash
+            unreadMessages = 0;
+            updateNotifications();
+        });
+        
+        // Chatni yopish/ochish
+        chatbotToggle.addEventListener('click', () => {
+            isChatOpen = !isChatOpen;
+            if (isChatOpen) {
+                chatbotBody.style.display = 'block';
+                chatbotInput.style.display = 'flex';
+                chatbotIcon.textContent = '−';
+                
+                // Agar chat ochilgan bo'lsa, bildirishnomalarni tozalash
+                unreadMessages = 0;
+                updateNotifications();
+            } else {
+                chatbotBody.style.display = 'none';
+                chatbotInput.style.display = 'none';
+                chatbotIcon.textContent = '+';
+            }
+        });
+        
+        // Xabar yuborish
+        function sendUserMessage() {
+            const message = userMessage.value.trim();
+            if (message === '') return;
+            
+            // Foydalanuvchi xabarini ko'rsatish
+            const userMsgElement = document.createElement('div');
+            userMsgElement.className = 'chatbot-message user-message';
+            userMsgElement.textContent = message;
+            chatbotBody.appendChild(userMsgElement);
+            
+            // Tozalash
+            userMessage.value = '';
+            
+            // Avtomatik javob berish
+            setTimeout(() => {
+                const botResponse = getBotResponse(message);
+                const botMsgElement = document.createElement('div');
+                botMsgElement.className = 'chatbot-message bot-message';
+                botMsgElement.textContent = botResponse;
+                chatbotBody.appendChild(botMsgElement);
+                
+                // Agar chat yopiq bo'lsa, bildirishnoma qo'shish
+                if (!isChatOpen) {
+                    unreadMessages++;
+                    updateNotifications();
+                }
+                
+                // Avtomatik pastga scroll qilish
+                chatbotBody.scrollTop = chatbotBody.scrollHeight;
+            }, 500);
+            
+            // Avtomatik pastga scroll qilish
+            chatbotBody.scrollTop = chatbotBody.scrollHeight;
+        }
+        
+        // Enter bosganda xabar yuborish
+        userMessage.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendUserMessage();
+            }
+        });
+        
+        // Yuborish tugmasi
+        sendMessage.addEventListener('click', sendUserMessage);
+        
+        // Bot javoblari
+        function getBotResponse(message) {
+            const lowerMsg = message.toLowerCase();
+            
+            if (lowerMsg.includes('salom') || lowerMsg.includes('hi') || lowerMsg.includes('hello')) {
+                return "Salom! G'ILDIRAK avto zapchastlar do'koniga xush kelibsiz! Sizga qanday yordam bera olaman?";
+            } else if (lowerMsg.includes('narx') || lowerMsg.includes('price') || lowerMsg.includes('qancha')) {
+                return "Mahsulot narxlari turli bo'lishi mumkin. Qaysi mahsulot haqida ma'lumot olmoqchisiz?";
+            } else if (lowerMsg.includes('yetkazib berish') || lowerMsg.includes('delivery')) {
+                return "Biz Toshkent bo'ylab bepul yetkazib beramiz. Boshqa shaharlar uchun yetkazish narxi 50,000 so'mdan boshlanadi.";
+            } else if (lowerMsg.includes('aloqa') || lowerMsg.includes('contact') || lowerMsg.includes('tel')) {
+                return "Biz bilan bog'lanish uchun: +998 90 123 45 67 yoki info@gildirak.uz";
+            } else if (lowerMsg.includes('rahmat') || lowerMsg.includes('thanks') || lowerMsg.includes('thank')) {
+                return "Sizga ham rahmat! Yana savollaringiz bo'lsa, murojaat qiling.";
+            } else {
+                return "Kechirasiz, savolingizni tushunmadim. Iltimos, batafsilroq yozing yoki telefon orqali bog'laning: +998 90 123 45 67";
+            }
+        }
+        
+        // Bildirishnomalarni yangilash
+        function updateNotifications() {
+            if (unreadMessages > 0) {
+                chatNotification.textContent = unreadMessages;
+                chatNotificationFull.textContent = unreadMessages;
+                chatNotification.style.display = 'flex';
+                chatNotificationFull.style.display = 'flex';
+            } else {
+                chatNotification.style.display = 'none';
+                chatNotificationFull.style.display = 'none';
+            }
+        }
+        
+        // Yangi xabarlarni simulyatsiya qilish (faqat namuna uchun)
+        function simulateNewMessages() {
+            setTimeout(() => {
+                if (!isChatOpen) {
+                    unreadMessages++;
+                    updateNotifications();
+                    
+                    // Signal efekti
+                    const notification = document.querySelector('.chatbot-notification');
+                    notification.style.animation = 'none';
+                    void notification.offsetWidth; // Trigger reflow
+                    notification.style.animation = 'pulse 0.5s 3';
+                }
+            }, 15000); // 15 soniyadan keyin yangi xabar
+        }
+        
+        // Dastlabki sozlashlar
+        updateNotifications();
+        simulateNewMessages();
+    </script>
+</body>
+</html>
 
 			<div class="container">
 				<div class="row">
