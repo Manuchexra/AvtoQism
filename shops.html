@@ -3,50 +3,969 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AutoQism - Hamkor Do'konlar</title>
-    <link rel="stylesheet" href="assets/css/shops.css">
+    <title>G'ILDIRAK - Avto Zapchastlar Do'koni</title>
+    <style>
+        /* Umumiy stillar */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Navbar */
+        .navbar {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .navbar-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #2c3e50;
+            text-decoration: none;
+        }
+        
+        .logo span {
+            color: #3498db;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 30px;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: #2c3e50;
+            font-weight: 500;
+            font-size: 16px;
+            text-transform: uppercase;
+            transition: color 0.3s;
+            position: relative;
+        }
+        
+        .nav-links a:hover {
+            color: #3498db;
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background-color: #3498db;
+            bottom: -5px;
+            left: 0;
+            transition: width 0.3s;
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: #2c3e50;
+            cursor: pointer;
+        }
+        
+        /* Hero section */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: white;
+            margin-bottom: 50px;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .hero h1 {
+            font-size: 42px;
+            margin-bottom: 20px;
+        }
+        
+        .hero p {
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: #3498db;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: #2980b9;
+        }
+        
+        /* Search and filter */
+        .search-filter {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 40px;
+        }
+        
+        .search-container {
+            display: flex;
+            margin-bottom: 20px;
+        }
+        
+        .search-container input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px 0 0 4px;
+            font-size: 16px;
+            outline: none;
+        }
+        
+        .search-container button {
+            background-color: #2c3e50;
+            color: white;
+            border: none;
+            padding: 0 20px;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .search-container button:hover {
+            background-color: #1a252f;
+        }
+        
+        .filter-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .filter-group {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .filter-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .filter-group select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        /* Products section */
+        .products-section {
+            margin-bottom: 60px;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .section-title h2 {
+            font-size: 36px;
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+        
+        .section-title p {
+            color: #7f8c8d;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        
+        .product-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .product-img {
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .product-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .product-card:hover .product-img img {
+            transform: scale(1.1);
+        }
+        
+        .product-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #e74c3c;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .product-content {
+            padding: 20px;
+        }
+        
+        .product-title {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+        
+        .product-description {
+            color: #7f8c8d;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+        
+        .product-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .product-price {
+            font-size: 22px;
+            font-weight: bold;
+            color: #3498db;
+        }
+        
+        .product-stock {
+            color: #27ae60;
+            font-size: 14px;
+        }
+        
+        .product-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .add-to-cart {
+            flex: 1;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .add-to-cart:hover {
+            background-color: #2980b9;
+        }
+        
+        .view-details {
+            flex: 1;
+            background-color: #2c3e50;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-align: center;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        
+        .view-details:hover {
+            background-color: #1a252f;
+        }
+        
+        /* Categories sidebar */
+        .shop-container {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 30px;
+        }
+        
+        .sidebar {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            height: fit-content;
+        }
+        
+        .sidebar-title {
+            font-size: 20px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+            color: #2c3e50;
+        }
+        
+        .category-list {
+            list-style: none;
+        }
+        
+        .category-item {
+            margin-bottom: 10px;
+        }
+        
+        .category-item a {
+            display: block;
+            padding: 8px 0;
+            color: #7f8c8d;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .category-item a:hover {
+            color: #3498db;
+        }
+        
+        .category-item a.active {
+            color: #3498db;
+            font-weight: 500;
+        }
+        
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 40px;
+        }
+        
+        .pagination a {
+            color: #2c3e50;
+            padding: 8px 16px;
+            text-decoration: none;
+            border: 1px solid #ddd;
+            margin: 0 4px;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        
+        .pagination a.active {
+            background-color: #3498db;
+            color: white;
+            border: 1px solid #3498db;
+        }
+        
+        .pagination a:hover:not(.active) {
+            background-color: #ddd;
+        }
+        
+        /* Footer */
+        .footer {
+            background-color: #2c3e50;
+            color: white;
+            padding: 60px 0 20px;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-col h3 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 2px;
+            background-color: #3498db;
+        }
+        
+        .footer-col p {
+            color: #bdc3c7;
+            margin-bottom: 15px;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: #bdc3c7;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: #3498db;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            color: white;
+            transition: background-color 0.3s;
+        }
+        
+        .social-links a:hover {
+            background-color: #3498db;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #bdc3c7;
+            font-size: 14px;
+        }
+        
+        /* Responsive dizayn */
+        @media (max-width: 992px) {
+            .shop-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                display: none;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 80px);
+                background-color: white;
+                flex-direction: column;
+                align-items: center;
+                justify-content: flex-start;
+                padding-top: 30px;
+                transition: left 0.3s;
+            }
+            
+            .nav-links.active {
+                left: 0;
+            }
+            
+            .nav-links li {
+                margin: 15px 0;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .hero h1 {
+                font-size: 32px;
+            }
+            
+            .section-title h2 {
+                font-size: 30px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .hero {
+                height: 350px;
+            }
+            
+            .filter-container {
+                flex-direction: column;
+            }
+            
+            .filter-group {
+                width: 100%;
+            }
+        }
+    </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <header class="header">
-        <div class="container">
-            <h1>AutoQism</h1>
-            <nav>
-                <a href="index.html">Bosh Sahifa</a>
-                <a href="shops.html" class="active">Do'konlar</a>
-                <a href="parts.html">Zapchastlar</a>
-            </nav>
-        </div>
-    </header>
-
-    <main class="shops-main">
-        <div class="container">
-            <h2>Hamkor Do'konlarimiz</h2>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container navbar-container">
+            <a href="index.html" class="logo">G'ILDIRAK</a>
             
-            <div class="shop-filters">
-                <div class="search-box">
-                    <input type="text" id="shop-search" placeholder="Do'kon nomi yoki manzili...">
-                    <button id="search-btn"><i class="fas fa-search"></i></button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">HOME</a></li>
+                <li><a href="shops.html" class="active">SHOPS</a></li>
+                <li><a href="service.html">SERVICE</a></li>
+                <li><a href="featured-cars.html">FEATURED CARS</a></li>
+                <li><a href="brands.html">BRANDS</a></li>
+                <li><a href="contact.html">CONTACT</a></li>
+            </ul>
+            
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Avto Zapchastlar Do'koni</h1>
+                <p>Barcha turdagi avtomobillar uchun original va sifatli zapchastlarni bizda topishingiz mumkin</p>
+                <a href="#products" class="btn">Mahsulotlarni ko'rish</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main content -->
+    <div class="container">
+        <div class="shop-container">
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <h3 class="sidebar-title">Kategoriyalar</h3>
+                <ul class="category-list">
+                    <li class="category-item"><a href="#" class="active">Barcha mahsulotlar</a></li>
+                    <li class="category-item"><a href="#">Dvigatel qismlari</a></li>
+                    <li class="category-item"><a href="#">Tormoz tizimi</a></li>
+                    <li class="category-item"><a href="#">Suspensiya</a></li>
+                    <li class="category-item"><a href="#">Elektr tizimi</a></li>
+                    <li class="category-item"><a href="#">Transmissiya</a></li>
+                    <li class="category-item"><a href="#">Shinalar va g'ildiraklar</a></li>
+                    <li class="category-item"><a href="#">Salon qismlari</a></li>
+                    <li class="category-item"><a href="#">Farlar va chiroqlar</a></li>
+                    <li class="category-item"><a href="#">Filtrlar va moylar</a></li>
+                </ul>
+                
+                <h3 class="sidebar-title" style="margin-top: 30px;">Filtrlar</h3>
+                <div class="filter-group">
+                    <label for="price-range">Narx oralig'i</label>
+                    <input type="range" id="price-range" min="0" max="1000000" step="10000" value="500000">
+                    <div style="display: flex; justify-content: space-between; margin-top: 5px;">
+                        <span>0 so'm</span>
+                        <span id="price-value">500,000 so'm</span>
+                    </div>
                 </div>
-                <select id="category-filter">
-                    <option value="all">Barcha kategoriyalar</option>
-                    <option value="Tyres & Wheels">Shinalar va G'ildiraklar</option>
-                    <option value="Engine">Dvigatel qismlari</option>
-                </select>
-            </div>
+                
+                <div class="filter-group" style="margin-top: 20px;">
+                    <label for="brand">Brend</label>
+                    <select id="brand">
+                        <option value="">Barchasi</option>
+                        <option value="brembo">Brembo</option>
+                        <option value="bosch">Bosch</option>
+                        <option value="mobil">Mobil</option>
+                        <option value="castrol">Castrol</option>
+                        <option value="continental">Continental</option>
+                    </select>
+                </div>
+                
+                <button style="width: 100%; padding: 12px; margin-top: 20px; background-color: #e74c3c; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                    Filtrlarni tozalash
+                </button>
+            </aside>
             
-            <div class="shops-container" id="shops-container">
-                <!-- Shops will be loaded here from JSON -->
-            </div>
+            <!-- Main content -->
+            <main>
+                <!-- Search and filter -->
+                <div class="search-filter">
+                    <div class="search-container">
+                        <input type="text" placeholder="Mahsulot nomi yoki VIN raqamini kiriting...">
+                        <button type="submit"><i class="fas fa-search"></i></button>
+                    </div>
+                    <div class="filter-container">
+                        <div class="filter-group">
+                            <label for="sort">Saralash</label>
+                            <select id="sort">
+                                <option value="popular">Mashhurlik bo'yicha</option>
+                                <option value="price-low">Arzondan qimmatga</option>
+                                <option value="price-high">Qimmatdan arzonga</option>
+                                <option value="new">Yangi mahsulotlar</option>
+                                <option value="discount">Chegirmalar</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="availability">Mavjudlik</label>
+                            <select id="availability">
+                                <option value="all">Barchasi</option>
+                                <option value="in-stock">Faqat omborda mavjud</option>
+                                <option value="pre-order">Buyurtma asosida</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="compatibility">Mos keladigan avto</label>
+                            <select id="compatibility">
+                                <option value="all">Barcha avtomobillar</option>
+                                <option value="toyota">Toyota</option>
+                                <option value="chevrolet">Chevrolet</option>
+                                <option value="hyundai">Hyundai</option>
+                                <option value="kia">Kia</option>
+                                <option value="nexia">Nexia</option>
+                                <option value="gentra">Gentra</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Products section -->
+                <section class="products-section" id="products">
+                    <div class="section-title">
+                        <h2>Barcha Mahsulotlar</h2>
+                        <p>Bizning do'konimizdagi eng yaxshi avto zapchastlar tanlovi</p>
+                    </div>
+                    
+                    <div class="products-grid">
+                        <!-- Product 1 -->
+                        <div class="product-card">
+                            <div class="product-img">
+                                <img src="https://images.unsplash.com/photo-1559181567-c3190ca9959b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Brembo tormoz tagliklari">
+                                <span class="product-badge">Yangi</span>
+                            </div>
+                            <div class="product-content">
+                                <h3 class="product-title">Brembo Tormoz Tagliklari</h3>
+                                <p class="product-description">Yuqori sifatli tormoz tagliklari, barcha yengil avtomobillar uchun</p>
+                                <div class="product-meta">
+                                    <span class="product-price">120,000 so'm</span>
+                                    <span class="product-stock">15 ta qoldi</span>
+                                </div>
+                                <div class="product-actions">
+                                    <button class="add-to-cart">Savatga</button>
+                                    <a href="#" class="view-details">Batafsil</a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Product 2 -->
+                        <div class="product-card">
+                            <div class="product-img">
+                                <img src="https://images.unsplash.com/photo-1600861195091-690c92f1d2cc?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Bosch moy filtri">
+                                <span class="product-badge">Chegirma 15%</span>
+                            </div>
+                            <div class="product-content">
+                                <h3 class="product-title">Bosch Moy Filtr</h3>
+                                <p class="product-description">Original moy filtri, uzun xizmat muddati</p>
+                                <div class="product-meta">
+                                    <span class="product-price">85,000 so'm</span>
+                                    <span class="product-stock">32 ta qoldi</span>
+                                </div>
+                                <div class="product-actions">
+                                    <button class="add-to-cart">Savatga</button>
+                                    <a href="#" class="view-details">Batafsil</a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Product 3 -->
+                        <div class="product-card">
+                            <div class="product-img">
+                                <img src="https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Bridgestone shinalar">
+                            </div>
+                            <div class="product-content">
+                                <h3 class="product-title">Bridgestone Shina 195/65 R15</h3>
+                                <p class="product-description">Yozgi shinalar, yuqori sifatli kauchuk</p>
+                                <div class="product-meta">
+                                    <span class="product-price">1,200,000 so'm</span>
+                                    <span class="product-stock">8 ta qoldi</span>
+                                </div>
+                                <div class="product-actions">
+                                    <button class="add-to-cart">Savatga</button>
+                                    <a href="#" class="view-details">Batafsil</a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Product 4 -->
+                        <div class="product-card">
+                            <div class="product-img">
+                                <img src="https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Varta akkumulyator">
+                            </div>
+                            <div class="product-content">
+                                <h3 class="product-title">Varta Akkumulyator 60Ah</h3>
+                                <p class="product-description">Kuchli akkumulyator, qishda ishonchli ishlaydi</p>
+                                <div class="product-meta">
+                                    <span class="product-price">850,000 so'm</span>
+                                    <span class="product-stock">12 ta qoldi</span>
+                                </div>
+                                <div class="product-actions">
+                                    <button class="add-to-cart">Savatga</button>
+                                    <a href="#" class="view-details">Batafsil</a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Product 5 -->
+                        <div class="product-card">
+                            <div class="product-img">
+                                <img src="https://images.unsplash.com/photo-1494976388901-7509ad5932b9?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Nexia 3 old faralar">
+                                <span class="product-badge">Yangi</span>
+                            </div>
+                            <div class="product-content">
+                                <h3 class="product-title">Nexia 3 Old Faralar</h3>
+                                <p class="product-description">Original faralar to'plami, LED ishqalanish</p>
+                                <div class="product-meta">
+                                    <span class="product-price">1,500,000 so'm</span>
+                                    <span class="product-stock">5 ta qoldi</span>
+                                </div>
+                                <div class="product-actions">
+                                    <button class="add-to-cart">Savatga</button>
+                                    <a href="#" class="view-details">Batafsil</a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Product 6 -->
+                        <div class="product-card">
+                            <div class="product-img">
+                                <img src="https://images.unsplash.com/photo-1558346648-9757f2fa4474?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Mobil motor moyi">
+                            </div>
+                            <div class="product-content">
+                                <h3 class="product-title">Mobil 1 Motor Moyi 5W-30</h3>
+                                <p class="product-description">Sintetik motor moyi, 5 litr</p>
+                                <div class="product-meta">
+                                    <span class="product-price">350,000 so'm</span>
+                                    <span class="product-stock">25 ta qoldi</span>
+                                </div>
+                                <div class="product-actions">
+                                    <button class="add-to-cart">Savatga</button>
+                                    <a href="#" class="view-details">Batafsil</a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Product 7 -->
+                        <div class="product-card">
+                            <div class="product-img">
+                                <img src="https://images.unsplash.com/photo-1493238792000-8113da705763?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Konditsioner kompressori">
+                            </div>
+                            <div class="product-content">
+                                <h3 class="product-title">Konditsioner Kompressori</h3>
+                                <p class="product-description">Yangi konditsioner kompressori, barcha modelar uchun</p>
+                                <div class="product-meta">
+                                    <span class="product-price">1,800,000 so'm</span>
+                                    <span class="product-stock">3 ta qoldi</span>
+                                </div>
+                                <div class="product-actions">
+                                    <button class="add-to-cart">Savatga</button>
+                                    <a href="#" class="view-details">Batafsil</a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Product 8 -->
+                        <div class="product-card">
+                            <div class="product-img">
+                                <img src="https://images.unsplash.com/photo-1591768793355-74d04bb6608f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Toyota Corolla ehtiyot qismlari">
+                                <span class="product-badge">Chegirma 20%</span>
+                            </div>
+                            <div class="product-content">
+                                <h3 class="product-title">Toyota Corolla Ehtiyot Qismlari</h3>
+                                <p class="product-description">Original ehtiyot qismlar to'plami</p>
+                                <div class="product-meta">
+                                    <span class="product-price">2,400,000 so'm</span>
+                                    <span class="product-stock">7 ta qoldi</span>
+                                </div>
+                                <div class="product-actions">
+                                    <button class="add-to-cart">Savatga</button>
+                                    <a href="#" class="view-details">Batafsil</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Pagination -->
+                    <div class="pagination">
+                        <a href="#">&laquo;</a>
+                        <a href="#" class="active">1</a>
+                        <a href="#">2</a>
+                        <a href="#">3</a>
+                        <a href="#">4</a>
+                        <a href="#">5</a>
+                        <a href="#">&raquo;</a>
+                    </div>
+                </section>
+            </main>
         </div>
-    </main>
+    </div>
 
+    <!-- Footer -->
     <footer class="footer">
         <div class="container">
-            <p>&copy; 2023 AutoQism. Barcha huquqlar himoyalangan.</p>
+            <div class="footer-grid">
+                <!-- Column 1 -->
+                <div class="footer-col">
+                    <h3>G'ILDIRAK</h3>
+                    <p>Biz avtomobillar uchun original va sifatli zapchastlarni yetkazib beramiz.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-telegram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <!-- Column 2 -->
+                <div class="footer-col">
+                    <h3>Kategoriyalar</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Dvigatel qismlari</a></li>
+                        <li><a href="#">Tormoz tizimi</a></li>
+                        <li><a href="#">Suspensiya</a></li>
+                        <li><a href="#">Elektr tizimi</a></li>
+                        <li><a href="#">Transmissiya</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Column 3 -->
+                <div class="footer-col">
+                    <h3>Foydali Havolalar</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Bosh sahifa</a></li>
+                        <li><a href="shops.html">Do'kon</a></li>
+                        <li><a href="service.html">Xizmatlar</a></li>
+                        <li><a href="featured-cars.html">Avtomobillar</a></li>
+                        <li><a href="contact.html">Aloqa</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Column 4 -->
+                <div class="footer-col">
+                    <h3>Aloqa</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> Toshkent sh., Yunusobod tumani</p>
+                    <p><i class="fas fa-phone"></i> +998 90 123 45 67</p>
+                    <p><i class="fas fa-envelope"></i> info@gildirak.uz</p>
+                    <p><i class="fas fa-clock"></i> Dushanba-Shanba: 9:00 - 18:00</p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2023 G'ILDIRAK. Barcha huquqlar himoyalangan.</p>
+            </div>
         </div>
     </footer>
 
-    <script src="assets/js/shops.js"></script>
+    <script>
+        // Mobil menyu uchun JavaScript
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navLinks = document.getElementById('navLinks');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            
+            // Iconni o'zgartirish
+            if (navLinks.classList.contains('active')) {
+                mobileMenuBtn.innerHTML = '<i class="fas fa-times"></i>';
+            } else {
+                mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+            }
+        });
+        
+        // Katta ekranlarda menyu yopilishi
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768) {
+                navLinks.classList.remove('active');
+                mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+            }
+        });
+        
+        // Narx filtrini yangilash
+        const priceRange = document.getElementById('price-range');
+        const priceValue = document.getElementById('price-value');
+        
+        priceRange.addEventListener('input', () => {
+            const value = parseInt(priceRange.value).toLocaleString();
+            priceValue.textContent = `${value} so'm`;
+        });
+        
+        // Savatga qo'shish funksiyasi
+        const addToCartButtons = document.querySelectorAll('.add-to-cart');
+        
+        addToCartButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const productCard = button.closest('.product-card');
+                const productName = productCard.querySelector('.product-title').textContent;
+                const productPrice = productCard.querySelector('.product-price').textContent;
+                
+                alert(`${productName} savatingizga qo'shildi!\nNarxi: ${productPrice}`);
+            });
+        });
+    </script>
 </body>
 </html>
