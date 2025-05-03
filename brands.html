@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brendlar | G'ILDIRAK Avto Zapchastlar</title>
+    <style>
+        /* Umumiy stil */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Navbar (rasmdagi dizaynga mos) */
+        .navbar {
+            background-color: #2c3e50;
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .navbar-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+        }
+        
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 30px;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: white;
+            font-weight: 500;
+            font-size: 16px;
+            text-transform: uppercase;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: #3498db;
+        }
+        
+        .cart-count {
+            background-color: #e74c3c;
+            color: white;
+            border-radius: 50%;
+            padding: 2px 6px;
+            font-size: 12px;
+            margin-left: 5px;
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: white;
+            cursor: pointer;
+        }
+        
+        /* Brendlar sahifasi kontenti */
+        .brands-hero {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 300px;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: white;
+            margin-bottom: 50px;
+        }
+        
+        .brands-hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .brands-hero h1 {
+            font-size: 42px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+        
+        /* Brendlar galereyasi */
+        .brands-section {
+            padding: 50px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .section-title h2 {
+            font-size: 36px;
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+        
+        .section-title p {
+            color: #7f8c8d;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .brands-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 30px;
+        }
+        
+        .brand-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            text-align: center;
+            transition: all 0.3s;
+        }
+        
+        .brand-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        
+        .brand-logo {
+            height: 80px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .brand-logo img {
+            max-height: 100%;
+            max-width: 100%;
+            object-fit: contain;
+        }
+        
+        .brand-name {
+            font-size: 18px;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .brand-products {
+            color: #7f8c8d;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+        
+        .view-brand {
+            display: inline-block;
+            color: #3498db;
+            font-weight: 500;
+            text-decoration: none;
+            font-size: 14px;
+            border: 1px solid #3498db;
+            padding: 5px 15px;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+        
+        .view-brand:hover {
+            background-color: #3498db;
+            color: white;
+        }
+        
+        /* Footer */
+        .footer {
+            background-color: #2c3e50;
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+        }
+        
+        .footer p {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            margin: 20px 0;
+        }
+        
+        .footer-links li {
+            margin: 0 15px;
+        }
+        
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Responsive dizayn */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: fixed;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background-color: #2c3e50;
+                flex-direction: column;
+                align-items: center;
+                padding: 20px 0;
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .nav-links li {
+                margin: 10px 0;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .brands-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+            
+            .brands-hero h1 {
+                font-size: 32px;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container navbar-container">
+            <a href="index.html" class="logo">G'ILDIRAK</a>
+            
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Bosh sahifa</a></li>
+                <li><a href="shops.html">Do'kon</a></li>
+                <li><a href="service.html">Xizmatlar</a></li>
+                <li><a href="brands.html" class="active">Brendlar</a></li>
+                <li><a href="contact.html">Aloqa</a></li>
+                <li>
+                    <a href="cart.html">SAVATCHA <span class="cart-count">3</span></a>
+                </li>
+            </ul>
+            
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Brendlar hero qismi -->
+    <section class="brands-hero">
+        <div class="container brands-hero-content">
+            <h1>AVTOMOBILINGIZ UCHUN TO'G'RI ZAPCHASTNI TOPING</h1>
+            <p>Dunyoning etakchi avto zapchast ishlab chiqaruvchilari bilan hamkorlik</p>
+        </div>
+    </section>
+
+    <!-- Brendlar asosiy qismi -->
+    <div class="container">
+        <section class="brands-section">
+            <div class="section-title">
+                <h2>Brendlarimiz</h2>
+                <p>Biz faqat ishonchli va sifatli brendlarning mahsulotlarini taklif qilamiz</p>
+            </div>
+            
+            <!-- Brendlar galereyasi -->
+            <div class="brands-grid">
+                <!-- Brend 1 -->
+                <div class="brand-card">
+                    <div class="brand-logo">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Brembo_logo.svg/2560px-Brembo_logo.svg.png" alt="Brembo">
+                    </div>
+                    <h3 class="brand-name">Brembo</h3>
+                    <div class="brand-products">143 ta mahsulot</div>
+                    <a href="shops.html?brand=brembo" class="view-brand">Ko'rish</a>
+                </div>
+                
+                <!-- Brend 2 -->
+                <div class="brand-card">
+                    <div class="brand-logo">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/Bosch_logo.svg/2560px-Bosch_logo.svg.png" alt="Bosch">
+                    </div>
+                    <h3 class="brand-name">Bosch</h3>
+                    <div class="brand-products">287 ta mahsulot</div>
+                    <a href="shops.html?brand=bosch" class="view-brand">Ko'rish</a>
+                </div>
+                
+                <!-- Brend 3 -->
+                <div class="brand-card">
+                    <div class="brand-logo">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/Michelin_logo.svg/2560px-Michelin_logo.svg.png" alt="Michelin">
+                    </div>
+                    <h3 class="brand-name">Michelin</h3>
+                    <div class="brand-products">89 ta mahsulot</div>
+                    <a href="shops.html?brand=michelin" class="view-brand">Ko'rish</a>
+                </div>
+                
+                <!-- Brend 4 -->
+                <div class="brand-card">
+                    <div class="brand-logo">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Mobil_logo.svg/1280px-Mobil_logo.svg.png" alt="Mobil">
+                    </div>
+                    <h3 class="brand-name">Mobil</h3>
+                    <div class="brand-products">76 ta mahsulot</div>
+                    <a href="shops.html?brand=mobil" class="view-brand">Ko'rish</a>
+                </div>
+                
+                <!-- Brend 5 -->
+                <div class="brand-card">
+                    <div class="brand-logo">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Castrol_logo.svg/2560px-Castrol_logo.svg.png" alt="Castrol">
+                    </div>
+                    <h3 class="brand-name">Castrol</h3>
+                    <div class="brand-products">64 ta mahsulot</div>
+                    <a href="shops.html?brand=castrol" class="view-brand">Ko'rish</a>
+                </div>
+                
+                <!-- Brend 6 -->
+                <div class="brand-card">
+                    <div class="brand-logo">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Continental_AG_logo.svg/1200px-Continental_AG_logo.svg.png" alt="Continental">
+                    </div>
+                    <h3 class="brand-name">Continental</h3>
+                    <div class="brand-products">112 ta mahsulot</div>
+                    <a href="shops.html?brand=continental" class="view-brand">Ko'rish</a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>AVTOMOBILINGIZ UCHUN TO'G'RI ZAPCHASTNI BIR JONDAN TOPING!</p>
+            <p>Model yoki VIN raqam orqali izlang, narxami solishtiring, uyingizga yetkazib olishni buyurtma qiling!</p>
+            
+            <ul class="footer-links">
+                <li><a href="index.html">Bosh sahifa</a></li>
+                <li><a href="shops.html">Do'kon</a></li>
+                <li><a href="service.html">Xizmatlar</a></li>
+                <li><a href="contact.html">Bog'lanish</a></li>
+            </ul>
+            
+            <p>&copy; 2023 G'ILDIRAK. Barcha huquqlar himoyalangan.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Mobil menyu
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navLinks = document.getElementById('navLinks');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            
+            if (navLinks.classList.contains('active')) {
+                mobileMenuBtn.innerHTML = '<i class="fas fa-times"></i>';
+            } else {
+                mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+            }
+        });
+    </script>
+</body>
+</html>
