@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Savatcha | G'ILDIRAK - Avto Zapchastlar Do'koni</title>
+    <style>
+        /* Asosiy stil - shops.html dan olingan */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Navbar - shops.html bilan bir xil */
+        .navbar {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .navbar-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #2c3e50;
+            text-decoration: none;
+        }
+        
+        .logo span {
+            color: #3498db;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 30px;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: #2c3e50;
+            font-weight: 500;
+            font-size: 16px;
+            text-transform: uppercase;
+            transition: color 0.3s;
+            position: relative;
+        }
+        
+        .nav-links a:hover {
+            color: #3498db;
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background-color: #3498db;
+            bottom: -5px;
+            left: 0;
+            transition: width 0.3s;
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: #2c3e50;
+            cursor: pointer;
+        }
+        
+        /* Cart page specific styles */
+        .cart-hero {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 300px;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: white;
+            margin-bottom: 50px;
+        }
+        
+        .cart-hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .cart-hero h1 {
+            font-size: 42px;
+            margin-bottom: 20px;
+        }
+        
+        .cart-hero p {
+            font-size: 18px;
+        }
+        
+        /* Cart main content */
+        .cart-container {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+        
+        /* Cart items section */
+        .cart-items {
+            background-color: white;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .cart-items-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .cart-items-title {
+            font-size: 24px;
+            color: #2c3e50;
+        }
+        
+        .cart-items-count {
+            color: #7f8c8d;
+            font-size: 14px;
+        }
+        
+        /* Cart item */
+        .cart-item {
+            display: grid;
+            grid-template-columns: 100px 1fr 150px;
+            gap: 20px;
+            padding: 20px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+        
+        .cart-item-img {
+            width: 100px;
+            height: 100px;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .cart-item-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .cart-item-details {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        
+        .cart-item-title {
+            font-size: 18px;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+        
+        .cart-item-brand {
+            color: #3498db;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        
+        .cart-item-remove {
+            color: #e74c3c;
+            font-size: 14px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            transition: color 0.3s;
+        }
+        
+        .cart-item-remove:hover {
+            color: #c0392b;
+        }
+        
+        .cart-item-remove i {
+            margin-right: 5px;
+        }
+        
+        .cart-item-price {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            justify-content: space-between;
+        }
+        
+        .cart-item-current-price {
+            font-size: 20px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        
+        .cart-item-original-price {
+            font-size: 16px;
+            color: #95a5a6;
+            text-decoration: line-through;
+            margin-right: 10px;
+        }
+        
+        .cart-item-quantity {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+        
+        .quantity-btn {
+            width: 30px;
+            height: 30px;
+            background-color: #f1f1f1;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .quantity-btn:hover {
+            background-color: #3498db;
+            color: white;
+        }
+        
+        .quantity-input {
+            width: 50px;
+            height: 30px;
+            text-align: center;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin: 0 5px;
+        }
+        
+        /* Cart summary */
+        .cart-summary {
+            background-color: white;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+        }
+        
+        .cart-summary-title {
+            font-size: 24px;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+        
+        .summary-label {
+            color: #7f8c8d;
+        }
+        
+        .summary-value {
+            font-weight: 500;
+        }
+        
+        .summary-total {
+            font-size: 20px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin: 20px 0;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+        
+        .summary-total .summary-value {
+            color: #e74c3c;
+            font-size: 24px;
+        }
+        
+        .checkout-btn {
+            display: block;
+            width: 100%;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-align: center;
+            text-decoration: none;
+            margin-top: 20px;
+        }
+        
+        .checkout-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .continue-shopping {
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .continue-shopping:hover {
+            text-decoration: underline;
+        }
+        
+        /* Empty cart */
+        .empty-cart {
+            text-align: center;
+            padding: 60px 0;
+            grid-column: 1 / -1;
+        }
+        
+        .empty-cart-icon {
+            font-size: 80px;
+            color: #bdc3c7;
+            margin-bottom: 20px;
+        }
+        
+        .empty-cart-title {
+            font-size: 28px;
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+        
+        .empty-cart-text {
+            color: #7f8c8d;
+            margin-bottom: 30px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        /* Promo code */
+        .promo-code {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+        
+        .promo-code-title {
+            font-size: 16px;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .promo-code-input {
+            display: flex;
+            margin-bottom: 10px;
+        }
+        
+        .promo-code-input input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px 0 0 4px;
+            font-size: 14px;
+            outline: none;
+        }
+        
+        .promo-code-input button {
+            background-color: #2c3e50;
+            color: white;
+            border: none;
+            padding: 0 15px;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .promo-code-input button:hover {
+            background-color: #1a252f;
+        }
+        
+        .promo-code-applied {
+            color: #27ae60;
+            font-size: 14px;
+            margin-top: 5px;
+            display: none;
+        }
+        
+        /* Payment methods */
+        .payment-methods {
+            margin-top: 20px;
+        }
+        
+        .payment-methods-title {
+            font-size: 16px;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .payment-methods-list {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .payment-method {
+            width: 50px;
+            height: 30px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: #7f8c8d;
+        }
+        
+        /* Responsive design */
+        @media (max-width: 992px) {
+            .cart-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .cart-summary {
+                position: static;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 80px);
+                background-color: white;
+                flex-direction: column;
+                align-items: center;
+                justify-content: flex-start;
+                padding-top: 30px;
+                transition: left 0.3s;
+            }
+            
+            .nav-links.active {
+                left: 0;
+            }
+            
+            .nav-links li {
+                margin: 15px 0;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .cart-hero h1 {
+                font-size: 32px;
+            }
+            
+            .cart-item {
+                grid-template-columns: 80px 1fr;
+            }
+            
+            .cart-item-price {
+                grid-column: 1 / -1;
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+                margin-top: 15px;
+                padding-top: 15px;
+                border-top: 1px dashed #eee;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .cart-hero {
+                height: 250px;
+            }
+            
+            .cart-items-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .cart-items-count {
+                margin-top: 5px;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container navbar-container">
+            <a href="index.html" class="logo">G'ILDIRAK</a>
+            
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">HOME</a></li>
+                <li><a href="shops.html">SHOPS</a></li>
+                <li><a href="service.html">SERVICE</a></li>
+                <li><a href="brands.html">BRANDS</a></li>
+                <li><a href="contact.html">CONTACT</a></li>
+                <li><a href="featured-cars.html" class="active"><i class="fas fa-shopping-cart"></i> SAVATCHA (3)</a></li>
+            </ul>
+            
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Cart Hero -->
+    <section class="cart-hero">
+        <div class="container cart-hero-content">
+            <h1>Sizning Savatchangiz</h1>
+            <p>Tanlagan mahsulotlaringizni ko'rib chiqing va buyurtma qiling</p>
+        </div>
+    </section>
+
+    <!-- Main content -->
+    <div class="container">
+        <div class="cart-container">
+            <!-- Cart Items -->
+            <div class="cart-items">
+                <div class="cart-items-header">
+                    <h2 class="cart-items-title">Savatchadagi Mahsulotlar</h2>
+                    <span class="cart-items-count">3 ta mahsulot</span>
+                </div>
+                
+                <!-- Cart Item 1 -->
+                <div class="cart-item">
+                    <div class="cart-item-img">
+                        <img src="https://images.unsplash.com/photo-1559181567-c3190ca9959b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Brembo tormoz tagliklari">
+                    </div>
+                    <div class="cart-item-details">
+                        <div>
+                            <h3 class="cart-item-title">Brembo Tormoz Tagliklari</h3>
+                            <span class="cart-item-brand">Brembo</span>
+                        </div>
+                        <a href="#" class="cart-item-remove">
+                            <i class="fas fa-trash-alt"></i> O'chirish
+                        </a>
+                    </div>
+                    <div class="cart-item-price">
+                        <div>
+                            <span class="cart-item-current-price">120,000 so'm</span>
+                            <span class="cart-item-original-price">150,000 so'm</span>
+                        </div>
+                        <div class="cart-item-quantity">
+                            <button class="quantity-btn">-</button>
+                            <input type="number" value="1" min="1" class="quantity-input">
+                            <button class="quantity-btn">+</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Cart Item 2 -->
+                <div class="cart-item">
+                    <div class="cart-item-img">
+                        <img src="https://images.unsplash.com/photo-1600861195091-690c92f1d2cc?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Bosch moy filtri">
+                    </div>
+                    <div class="cart-item-details">
+                        <div>
+                            <h3 class="cart-item-title">Bosch Moy Filtr</h3>
+                            <span class="cart-item-brand">Bosch</span>
+                        </div>
+                        <a href="#" class="cart-item-remove">
+                            <i class="fas fa-trash-alt"></i> O'chirish
+                        </a>
+                    </div>
+                    <div class="cart-item-price">
+                        <div>
+                            <span class="cart-item-current-price">85,000 so'm</span>
+                        </div>
+                        <div class="cart-item-quantity">
+                            <button class="quantity-btn">-</button>
+                            <input type="number" value="2" min="1" class="quantity-input">
+                            <button class="quantity-btn">+</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Cart Item 3 -->
+                <div class="cart-item">
+                    <div class="cart-item-img">
+                        <img src="https://images.unsplash.com/photo-1558346648-9757f2fa4474?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Mobil motor moyi">
+                    </div>
+                    <div class="cart-item-details">
+                        <div>
+                            <h3 class="cart-item-title">Mobil 1 Motor Moyi 5W-30</h3>
+                            <span class="cart-item-brand">Mobil</span>
+                        </div>
+                        <a href="#" class="cart-item-remove">
+                            <i class="fas fa-trash-alt"></i> O'chirish
+                        </a>
+                    </div>
+                    <div class="cart-item-price">
+                        <div>
+                            <span class="cart-item-current-price">350,000 so'm</span>
+                        </div>
+                        <div class="cart-item-quantity">
+                            <button class="quantity-btn">-</button>
+                            <input type="number" value="1" min="1" class="quantity-input">
+                            <button class="quantity-btn">+</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Cart Summary -->
+            <div class="cart-summary">
+                <h2 class="cart-summary-title">Buyurtma Xulosasi</h2>
+                
+                <div class="summary-row">
+                    <span class="summary-label">Mahsulotlar (3)</span>
+                    <span class="summary-value">555,000 so'm</span>
+                </div>
+                
+                <div class="summary-row">
+                    <span class="summary-label">Yetkazib berish</span>
+                    <span class="summary-value">30,000 so'm</span>
+                </div>
+                
+                <div class="summary-row">
+                    <span class="summary-label">Chegirma</span>
+                    <span class="summary-value">-30,000 so'm</span>
+                </div>
+                
+                <div class="summary-row summary-total">
+                    <span class="summary-label">Jami</span>
+                    <span class="summary-value">555,000 so'm</span>
+                </div>
+                
+                <!-- Promo Code -->
+                <div class="promo-code">
+                    <h3 class="promo-code-title">Promo kod</h3>
+                    <div class="promo-code-input">
+                        <input type="text" placeholder="Promo kodni kiriting">
+                        <button type="submit"><i class="fas fa-arrow-right"></i></button>
+                    </div>
+                    <div class="promo-code-applied">
+                        <i class="fas fa-check-circle"></i> "GILDIRAK10" promokodi qo'llandi (-10%)
+                    </div>
+                </div>
+                
+                <!-- Payment Methods -->
+                <div class="payment-methods">
+                    <h3 class="payment-methods-title">To'lov usullari</h3>
+                    <div class="payment-methods-list">
+                        <div class="payment-method"><i class="fab fa-cc-visa"></i></div>
+                        <div class="payment-method"><i class="fab fa-cc-mastercard"></i></div>
+                        <div class="payment-method"><i class="fas fa-money-bill-wave"></i></div>
+                        <div class="payment-method"><i class="fas fa-university"></i></div>
+                    </div>
+                </div>
+                
+                <a href="checkout.html" class="checkout-btn">BUYURTMA BERISH</a>
+                <a href="shops.html" class="continue-shopping">Xaridni davom ettirish</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer (shops.html bilan bir xil) -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <!-- Column 1 -->
+                <div class="footer-col">
+                    <h3>G'ILDIRAK</h3>
+                    <p>Biz avtomobillar uchun original va sifatli zapchastlarni yetkazib beramiz.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-telegram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <!-- Column 2 -->
+                <div class="footer-col">
+                    <h3>Kategoriyalar</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Dvigatel qismlari</a></li>
+                        <li><a href="#">Tormoz tizimi</a></li>
+                        <li><a href="#">Suspensiya</a></li>
+                        <li><a href="#">Elektr tizimi</a></li>
+                        <li><a href="#">Transmissiya</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Column 3 -->
+                <div class="footer-col">
+                    <h3>Foydali Havolalar</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Bosh sahifa</a></li>
+                        <li><a href="shops.html">Do'kon</a></li>
+                        <li><a href="service.html">Xizmatlar</a></li>
+                        <li><a href="featured-cars.html">Avtomobillar</a></li>
+                        <li><a href="contact.html">Aloqa</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Column 4 -->
+                <div class="footer-col">
+                    <h3>Aloqa</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> Toshkent sh., Yunusobod tumani</p>
+                    <p><i class="fas fa-phone"></i> +998 90 123 45 67</p>
+                    <p><i class="fas fa-envelope"></i> info@gildirak.uz</p>
+                    <p><i class="fas fa-clock"></i> Dushanba-Shanba: 9:00 - 18:00</p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2023 G'ILDIRAK. Barcha huquqlar himoyalangan.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobil menyu uchun JavaScript
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navLinks = document.getElementById('navLinks');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            
+            // Iconni o'zgartirish
+            if (navLinks.classList.contains('active')) {
+                mobileMenuBtn.innerHTML = '<i class="fas fa-times"></i>';
+            } else {
+                mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+            }
+        });
+        
+        // Katta ekranlarda menyu yopilishi
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768) {
+                navLinks.classList.remove('active');
+                mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+            }
+        });
+        
+        // Miqdor tugmalari
+        const quantityBtns = document.querySelectorAll('.quantity-btn');
+        const quantityInputs = document.querySelectorAll('.quantity-input');
+        
+        quantityBtns.forEach((btn, index) => {
+            btn.addEventListener('click', () => {
+                const input = quantityInputs[index];
+                let value = parseInt(input.value);
+                
+                if (btn.textContent === '+') {
+                    value++;
+                } else {
+                    if (value > 1) value--;
+                }
+                
+                input.value = value;
+                updateCartTotal();
+            });
+        });
+        
+        // Input qiymatini tekshirish
+        quantityInputs.forEach(input => {
+            input.addEventListener('change', () => {
+                if (input.value < 1) input.value = 1;
+                updateCartTotal();
+            });
+        });
+        
+        // O'chirish tugmalari
+        const removeBtns = document.querySelectorAll('.cart-item-remove');
+        
+        removeBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const cartItem = btn.closest('.cart-item');
+                cartItem.style.animation = 'fadeOut 0.3s forwards';
+                
+                setTimeout(() => {
+                    cartItem.remove();
+                    updateCartCount();
+                    updateCartTotal();
+                    
+                    // Agar savatcha bo'sh bo'lsa
+                    if (document.querySelectorAll('.cart-item').length === 0) {
+                        showEmptyCart();
+                    }
+                }, 300);
+            });
+        });
+        
+        // Promo kod
+        const promoInput = document.querySelector('.promo-code-input input');
+        const promoBtn = document.querySelector('.promo-code-input button');
+        const promoApplied = document.querySelector('.promo-code-applied');
+        
+        promoBtn.addEventListener('click', () => {
+            if (promoInput.value.trim() === 'GILDIRAK10') {
+                promoApplied.style.display = 'block';
+                updateCartTotal();
+            }
+        });
+        
+        // Savatcha miqdorini yangilash
+        function updateCartCount() {
+            const count = document.querySelectorAll('.cart-item').length;
+            document.querySelector('.cart-items-count').textContent = count + ' ta mahsulot';
+        }
+        
+        // Umumiy summani yangilash
+        function updateCartTotal() {
+            let subtotal = 0;
+            const items = document.querySelectorAll('.cart-item');
+            
+            items.forEach(item => {
+                const priceText = item.querySelector('.cart-item-current-price').textContent;
+                const price = parseInt(priceText.replace(/\D/g, ''));
+                const quantity = parseInt(item.querySelector('.quantity-input').value);
+                subtotal += price * quantity;
+            });
+            
+            // Chegirma (promo kod mavjud bo'lsa)
+            let discount = 0;
+            if (promoApplied.style.display === 'block') {
+                discount = subtotal * 0.1; // 10% chegirma
+            }
+            
+            // Yetkazib berish (misol uchun)
+            const delivery = subtotal > 500000 ? 0 : 30000;
+            
+            // Jami
+            const total = subtotal - discount + delivery;
+            
+            // UI ni yangilash
+            document.querySelector('.summary-row:nth-child(1) .summary-value').textContent = subtotal.toLocaleString() + ' so\'m';
+            document.querySelector('.summary-row:nth-child(2) .summary-value').textContent = delivery.toLocaleString() + ' so\'m';
+            document.querySelector('.summary-row:nth-child(3) .summary-value').textContent = '-' + discount.toLocaleString() + ' so\'m';
+            document.querySelector('.summary-total .summary-value').textContent = total.toLocaleString() + ' so\'m';
+        }
+        
+        // Bo'sh savatcha ko'rinishi
+        function showEmptyCart() {
+            const cartContainer = document.querySelector('.cart-container');
+            cartContainer.innerHTML = `
+                <div class="empty-cart">
+                    <div class="empty-cart-icon">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                    <h2 class="empty-cart-title">Sizning savatchangiz bo'sh</h2>
+                    <p class="empty-cart-text">Savatchangizda hozircha mahsulot yo'q. Do'konimizdagi mahsulotlarni ko'rib chiqing va tanlovingizni qo'shing.</p>
+                    <a href="shops.html" class="btn">Do'konga qaytish</a>
+                </div>
+            `;
+        }
+        
+        // Dastlabki hisoblash
+        updateCartTotal();
+    </script>
+</body>
+</html>
